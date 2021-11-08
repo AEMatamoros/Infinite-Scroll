@@ -12,24 +12,23 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        cb(null, Date.now() + '_'+ uniqueSuffix + file.originalname.replace(/ /g, ''))
+        cb(null,  uniqueSuffix + '_' + file.originalname.replace(/ /g, ''))
     }
 })
 
 const upload = multer({ storage: storage })
 //Controllers
-const { getPublications, createPublication } = require('../controller/publication-controller');
+const { createPublication, getPublications } = require('../controller/publication-controller');
 //Routes
 router.get('/:offset',getPublications,(req, res) => {
 })
-
-router.post('/', [
+router.post('/',upload.array('files[]',10), [
     check('title', 'El titulo es obligatorio').not().isEmpty(),
-    check('description', 'La descripcion es obligatoria').not().isEmpty(),
-    validarCampos
-],upload.single('file'),createPublication,(req, res) => {
+    check('description', 'La descripcion es obligatoria').not().isEmpty()
+    ],validarCampos ,createPublication,(req, res) => {
 
 })
+
 
 router.put('/', (req, res) => {
     res.status(200).json({ ok: true })

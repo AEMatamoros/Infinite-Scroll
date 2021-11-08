@@ -1,19 +1,52 @@
-<h1>Infinite Page</h1>
+<div class="container-fluid p-0 ">
+    <div class="row m-0 px-5 mt-2">
+        <h1 class="col-md-10 m-0 py-0 px-5 text-left">Infinite Page</h1>
+        <button class="btn btn-success col-md-2 px-1 form-control" data-toggle="modal" data-target="#exampleModal">Agregar Publicación</button>
+
+    </div>
+
 <div
       class="search-results"
       infiniteScroll
-      [infiniteScrollDistance]="2"
+      [infiniteScrollDistance]="2" 
       [infiniteScrollThrottle]="50"
       (scrolled)="onScroll()"
 >
 
-<ng-contianer *ngFor='let publication of publications'>
-    <div class="col-8 mx-auto pb-3 text-left">
+<ng-contianer *ngFor='let publication of publications' class="row m-0 ">
+    <div class="col-8 mx-auto p-3 my-2 text-left publication-container">
         <p class="m-0"><strong>{{publication.title}}</strong></p>
-        <small>{{publication.description}}</small>
-        
-        <img src="{{publication.img}}" class="img-fluid" alt="Responsive image">
+        <ng-contianer *ngFor = 'let tag of publication.tags'>
+            <small class="primary-tag"><strong>#{{ tag }} </strong></small>
+        </ng-contianer>
+        <br>
+        <ng-container *ngFor='let file of publication.files' class="row m-0 p-0">
+          <ng-container *ngIf='publication.files.length == 1'>
+
+            <img src="{{file.file_name}}" class="img-fluid col-12 p-0 publication-img" alt="Responsive image">
+
+          </ng-container>
+          <ng-container *ngIf='publication.files.length == 2'>
+
+            <img src="{{file.file_name}}" class="img-fluid col-6 p-0 publication-img" alt="Responsive image">
+
+          </ng-container>
+          <ng-container *ngIf='publication.files.length == 3'>
+
+            <img src="{{file.file_name}}" class="img-fluid col-4 p-0 publication-img" alt="Responsive image">
+
+          </ng-container>
+          <ng-container *ngIf='publication.files.length > 3'>
+
+            <img src="{{file.file_name}}" class="img-fluid col-3 p-0 publication-img" alt="Responsive image">
+
+          </ng-container>
+
+        </ng-container>
+        <br>
+        <small class="mt-4">{{publication.description }}</small>
     </div>
+    
     <div *ngIf='loadingPublications'> ... </div>
 
 </ng-contianer>
@@ -23,3 +56,43 @@
 
 
 </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nueva Publicación</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body row m-0">
+            <form class="col-md-12 mx-auto mt-2">
+                <div class="form-group ">
+                    <label for="" >Titulo</label>
+                    <input type="text" class="form-control" [(ngModel)]="publication.title" name="title" #title="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="">Descripción</label>
+                    <textarea name="" id="" cols="30" row m-0s="5" class="form-control" [(ngModel)]="publication.description" name="description" #description="ngModel" ></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="">Tags</label>
+                  <textarea name="" id="" cols="30" row m-0s="5" class="form-control" [(ngModel)]="publication.tags" name="tags" #tags="ngModel" ></textarea>
+              </div>
+                <div class="form-group">
+                    <label for="">Imagen</label>
+                    <input type="file" class="form-control" (change)="selectFiles($event)" multiple>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)='createPublication();'>Nuevo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
