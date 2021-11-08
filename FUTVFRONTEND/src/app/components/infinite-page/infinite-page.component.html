@@ -1,0 +1,25 @@
+<h1>Infinite Page</h1>
+<div
+      class="search-results"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"
+      (scrolled)="onScroll()"
+>
+
+<ng-contianer *ngFor='let publication of publications'>
+    <div class="col-8 mx-auto pb-3 text-left">
+        <p class="m-0"><strong>{{publication.title}}</strong></p>
+        <small>{{publication.description}}</small>
+        
+        <img src="{{publication.img}}" class="img-fluid" alt="Responsive image">
+    </div>
+    <div *ngIf='loadingPublications'> ... </div>
+
+</ng-contianer>
+
+
+
+
+
+</div>
