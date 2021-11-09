@@ -1,15 +1,15 @@
 import { getRepository } from "typeorm";
 import { NextFunction, Request, Response } from "express";
-import { Publication } from "../entity/Publication";
+import { File } from "../entity/Files";
 
-const getPublications = async (req: Request, res: Response, next: NextFunction) => {
+const getFiles = async (req: Request, res: Response, next: NextFunction) => {
    try {
-      const publicationRepository = getRepository(Publication);
-      const publications = await publicationRepository.find({ relations: ["files"] })
+      const fileRepository = getRepository(File);
+      const files = await fileRepository.find()
       res.status(200).json({
          ok: true,
          msg: 'Registros obtenidos',
-         registros: publications
+         registros: files
       })
    } catch (error) {
       res.status(400).json({
@@ -21,14 +21,14 @@ const getPublications = async (req: Request, res: Response, next: NextFunction) 
 
 }
 
-const getPublication = async (req: Request, res: Response, next: NextFunction) => {
+const getFile = async (req: Request, res: Response, next: NextFunction) => {
    try {
-      const publicationRepository = getRepository(Publication);
-      const publications = await publicationRepository.findOne(req.params.id,{ relations: ["files"] });
+      const fileRepository = getRepository(File);
+      const file = await fileRepository.findOne(req.params.id);
       res.status(200).json({
          ok: true,
          msg: 'Registros obtenidos',
-         registros: publications
+         registros: file
       })
    } catch (error) {
       res.status(400).json({
@@ -40,14 +40,14 @@ const getPublication = async (req: Request, res: Response, next: NextFunction) =
 
 }
 
-const postPublication = async (req: Request, res: Response, next: NextFunction) => {
+const postFile = async (req: Request, res: Response, next: NextFunction) => {
    try {
-      const publicationRepository = getRepository(Publication);
-      const newPublication = await publicationRepository.save(req.body);
+      const fileRepository = getRepository(File);
+      const newFile = await fileRepository.save(req.body);
       res.status(200).json({
          ok: true,
          msg: 'Registros guardado',
-         registros: newPublication
+         registros: newFile
       })
    } catch (error) {
       res.status(400).json({
@@ -59,17 +59,17 @@ const postPublication = async (req: Request, res: Response, next: NextFunction) 
 
 }
 
-const putPublication = async (req: Request, res: Response, next: NextFunction) => {
+const putFile = async (req: Request, res: Response, next: NextFunction) => {
    try {
 
-      const publicationRepository = getRepository(Publication);
-      const publication = await publicationRepository.findOne(req.params.id)
-      if (publication) {
-         const newPublication = await publicationRepository.save(req.body);
+      const fileRepository = getRepository(File);
+      const file = await fileRepository.findOne(req.params.id)
+      if (file) {
+         const newFile = await fileRepository.save(req.body);
          res.status(200).json({
             ok: true,
             msg: 'Registros guardado',
-            registros: newPublication
+            registros: newFile
          })
       } else {
          res.status(400).json({
@@ -89,12 +89,12 @@ const putPublication = async (req: Request, res: Response, next: NextFunction) =
 
 }
 
-const deletePublication = async (req: Request, res: Response, next: NextFunction) => {
+const deleteFile = async (req: Request, res: Response, next: NextFunction) => {
    try {
-      const publicationRepository = getRepository(Publication);
-      const publication = await publicationRepository.findOne(req.params.id)
-      if (publication) {
-         const action = await publicationRepository.remove(publication)
+      const fileRepository = getRepository(File);
+      const file = await fileRepository.findOne(req.params.id)
+      if (file) {
+         const action = await fileRepository.remove(file)
          res.status(200).json({
             ok: true,
             msg: 'Registros guardado',
@@ -119,9 +119,9 @@ const deletePublication = async (req: Request, res: Response, next: NextFunction
 
 
 export const options = {
-   getPublications,
-   getPublication,
-   postPublication,
-   putPublication,
-   deletePublication
+   getFile,
+   getFiles,
+   postFile,
+   deleteFile,
+   putFile
 }

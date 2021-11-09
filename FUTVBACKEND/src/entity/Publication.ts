@@ -1,4 +1,5 @@
-import { Entity,Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity,Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { File } from "./Files";
 
 @Entity()
 export class Publication {
@@ -10,4 +11,6 @@ export class Publication {
     description: string;
     @Column({default:() => 'CURRENT_TIMESTAMP'})
     date_created: Date;
+    @OneToMany(() => File, file => file.publication)
+    files: File[];
 }
