@@ -15,5 +15,5 @@ export class Publication {
     @OneToMany(() => File, file => file.publication)
     files: File[];
     @OneToMany(() => Tag, tag => tag.publication)
-    tags: File[];
+    tags: Tag[];
 }

@@ -17,6 +17,7 @@ export class InfinitePageComponent implements OnInit {
   public publications = [];
   public newPublications = [];
   public loadingPublications = true;
+  public numberOfPublications:number;
 
   //Crear Publicacion
   public publication = {
@@ -40,17 +41,17 @@ export class InfinitePageComponent implements OnInit {
     this.page += 1;
     this.offset = (3 * this.page) - 3;
     this.loadMorePublications(this.offset);
-    console.log('Scroll')
     
   }
 
   getPublications(offset): void {
     this.endpoint.getPublications(offset).subscribe(res => {
       console.log(res)
-      this.publications = res.publications;
+      this.publications = res.registros;
+      this.numberOfPublications = res.numeroDeRegistros
       this.publications.forEach(pub => {
         pub.files.forEach(file => {
-          file.file_name = this.endpoint.getEndPoint() + `images/` + file.file_name;
+          file.file_name = this.endpoint.getEndPoint() + `files/` + file.file_name;
         });
          
       });
@@ -64,10 +65,10 @@ export class InfinitePageComponent implements OnInit {
 
     this.endpoint.getPublications(offset).subscribe(res => {
 
-      this.newPublications = res.publications;
+      this.newPublications = res.registros;
       this.newPublications.forEach(pub => {
         pub.files.forEach(file => {
-          file.file_name = this.endpoint.getEndPoint() + `images/` + file.file_name
+          file.file_name = this.endpoint.getEndPoint() + `files/` + file.file_name
         });
         this.publications.push(pub);
       });

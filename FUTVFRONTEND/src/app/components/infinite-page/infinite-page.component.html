@@ -4,6 +4,7 @@
         <button class="btn btn-success col-md-2 px-1 form-control" data-toggle="modal" data-target="#exampleModal">Agregar Publicación</button>
 
     </div>
+    
 
 <div
       class="search-results"
@@ -16,8 +17,8 @@
 <ng-contianer *ngFor='let publication of publications' class="row m-0 ">
     <div class="col-8 mx-auto p-3 my-2 text-left publication-container">
         <p class="m-0"><strong>{{publication.title}}</strong></p>
-        <ng-contianer *ngFor = 'let tag of publication.tags'>
-            <small class="primary-tag"><strong>#{{ tag }} </strong></small>
+        <ng-contianer *ngFor = 'let tagO of publication.tags'>
+            <small class="primary-tag"><strong>#{{ tagO.tag}} </strong></small>
         </ng-contianer>
         <br>
         <ng-container *ngFor='let file of publication.files' class="row m-0 p-0">
@@ -48,9 +49,8 @@
     </div>
     
     <div *ngIf='loadingPublications'> ... </div>
-
 </ng-contianer>
-
+<div *ngIf='numberOfPublications == publications.length' class="col-12 text-center"> No hay mas registros </div>
 
 
 

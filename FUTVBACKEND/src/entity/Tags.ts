@@ -9,7 +9,7 @@ export class Tag {
     tag: string;
     @CreateDateColumn()
     date_created: Date;
-    @ManyToOne(() => Publication, publication => publication.files)
+    @ManyToOne(() => Publication, publication => publication.tags)
     publication: Publication;
     
 }

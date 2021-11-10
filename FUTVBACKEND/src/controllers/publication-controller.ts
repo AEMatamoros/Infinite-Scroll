@@ -1,16 +1,18 @@
 import { getRepository } from "typeorm";
 import { NextFunction, Request, Response } from "express";
+//Entities
 import { Publication } from "../entity/Publication";
 import { File } from "../entity/Files";
-
+import { Tag } from '../entity/Tags'; 
 const getPublications = async (req: Request, res: Response, next: NextFunction) => {
    try {
       const publicationRepository = getRepository(Publication);
-      const publications = await publicationRepository.find({ relations: ["files", 'tags'], take: 3, skip: parseInt(req.params.offset) })
+      const publications = await publicationRepository.find({ relations: ["files", 'tags'], take: 3, skip: parseInt(req.params.offset) ,order:{id:-1}})
       res.status(200).json({
          ok: true,
          msg: 'Registros obtenidos',
-         registros: publications
+         registros: publications,
+         numeroDeRegistros: await publicationRepository.count()
       });
    } catch (error) {
       res.status(400).json({
@@ -42,7 +44,7 @@ const getPublication = async (req: Request, res: Response, next: NextFunction) =
 }
 
 const postPublication = async (req: Request, res: Response, next: NextFunction) => {
-
+   
    try {
       let publication = req.body;
 
@@ -53,16 +55,25 @@ const postPublication = async (req: Request, res: Response, next: NextFunction) 
 
          const fileRepository = getRepository(File)
          for (let i = 0; i < req.files.length; i++) {
-            let newFile = {publication:newPublication.id,file_name:req.files[i].originalname};
+            let newFile = {publication:newPublication.id,file_name:req.files[i].filename};
             await fileRepository.save(newFile);
-         }
+         };
+
+      }
+
+      if ( req.body.tags && req.body.tags.length>0){
+         const tagRepository = getRepository(Tag)
+         for (let i = 0; i < req.body.tags.length; i++) {
+            let newTag = {publication:newPublication.id,tag:req.body.tags[i]};
+            let saved = await tagRepository.save(newTag);
+         };
 
       }
 
       res.status(200).json({
          ok: true,
          msg: 'Registros guardado',
-         registros: newPublication
+         registros: newPublication,
       });
    } catch (error) {
       res.status(400).json({

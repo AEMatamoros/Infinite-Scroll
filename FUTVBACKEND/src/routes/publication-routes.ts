@@ -16,8 +16,7 @@ publicationRouter.get('/one/:id',options.getPublication, (req,res)=>{
 
 })
 
-publicationRouter.post('/',upload.array('files',10), options.postPublication,(req,res)=>{
-
+publicationRouter.post('/',upload.array('files',10),options.postPublication,(req,res)=>{
 })
 
 publicationRouter.put('/:id',options.putPublication,(req,res)=>{

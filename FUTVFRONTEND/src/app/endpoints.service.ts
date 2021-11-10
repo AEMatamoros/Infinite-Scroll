@@ -27,7 +27,7 @@ export class EndpointsService {
     formData.append("description", publication.description);
 
     for(let i =0; i < files.length; i++){
-      formData.append("files[]", files[i], files[i]['name']);
+      formData.append("files", files[i], files[i]['name']);
     }
 
     for(let i =0; i < tags.length; i++){
