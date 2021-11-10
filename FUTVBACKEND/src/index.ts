@@ -5,6 +5,8 @@ import * as express from 'express';
 //Routes
 import { publicationRouter } from './routes/publication-routes';
 import { publicationFilesRouter } from './routes/publication-files-routes';
+import { publicationTagsRouter } from './routes/publication-tag-routes';
+
 createConnection().then(async connection => {
 
     console.log("Db Conected");
@@ -17,6 +19,7 @@ createConnection().then(async connection => {
     //Routes
     app.use('/publication',publicationRouter);
     app.use('/publication_files',publicationFilesRouter);
+    app.use('/publication_tags',publicationTagsRouter);
 
     app.listen(3000,()=>{
         console.log('Server On');

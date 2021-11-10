@@ -1,27 +1,28 @@
 import { Router } from 'express';
 
 import { options } from '../controllers/publication-files-controller';
+//Multer
+import { upload } from '../helpers/upload'
 
 export const publicationFilesRouter = Router();
 
-
-
-publicationFilesRouter.get('/',options.getFiles, (req,res)=>{
-
-})
-
-publicationFilesRouter.get('/:id',options.getFile, (req,res)=>{
+//Routes
+publicationFilesRouter.get('/', options.getFiles, (req, res) => {
 
 })
 
-publicationFilesRouter.post('/',options.postFile,(req,res)=>{
+publicationFilesRouter.get('/:id', options.getFile, (req, res) => {
 
 })
 
-publicationFilesRouter.put('/:id',options.putFile,(req,res)=>{
+publicationFilesRouter.post('/',upload.array('files',10), options.postFile, (req, res) => {
     
 })
 
-publicationFilesRouter.delete('/:id',options.deleteFile,(req,res)=>{
-    
+publicationFilesRouter.put('/:id', options.putFile, (req, res) => {
+
+})
+
+publicationFilesRouter.delete('/:id', options.deleteFile, (req, res) => {
+
 })

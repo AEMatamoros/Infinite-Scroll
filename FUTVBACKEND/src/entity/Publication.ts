@@ -1,5 +1,6 @@
 import { Entity,Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { File } from "./Files";
+import { Tag } from "./Tags";
 
 @Entity()
 export class Publication {
@@ -13,4 +14,6 @@ export class Publication {
     date_created: Date;
     @OneToMany(() => File, file => file.publication)
     files: File[];
+    @OneToMany(() => Tag, tag => tag.publication)
+    tags: File[];
 }

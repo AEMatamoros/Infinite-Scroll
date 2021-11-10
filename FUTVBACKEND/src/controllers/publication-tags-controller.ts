@@ -1,20 +1,15 @@
 import { getRepository } from "typeorm";
 import { NextFunction, Request, Response } from "express";
-import { File } from "../entity/Files";
+import { Tag } from "../entity/Tags";
 
-//Multer class 
-interface MulterRequest extends Request {
-   files: any;
-}
-
-const getFiles = async (req: Request, res: Response, next: NextFunction) => {
+const getTags = async (req: Request, res: Response, next: NextFunction) => {
    try {
-      const fileRepository = getRepository(File);
-      const files = await fileRepository.find()
+      const TagRepository = getRepository(Tag);
+      const tags = await TagRepository.find()
       res.status(200).json({
          ok: true,
          msg: 'Registros obtenidos',
-         registros: files
+         registros: tags
       })
    } catch (error) {
       res.status(400).json({
@@ -26,14 +21,14 @@ const getFiles = async (req: Request, res: Response, next: NextFunction) => {
 
 }
 
-const getFile = async (req: Request, res: Response, next: NextFunction) => {
+const getTag = async (req: Request, res: Response, next: NextFunction) => {
    try {
-      const fileRepository = getRepository(File);
-      const file = await fileRepository.findOne(req.params.id);
+      const tagRepository = getRepository(Tag);
+      const tag = await tagRepository.findOne(req.params.id);
       res.status(200).json({
          ok: true,
          msg: 'Registros obtenidos',
-         registros: file
+         registros: tag
       })
    } catch (error) {
       res.status(400).json({
@@ -45,15 +40,14 @@ const getFile = async (req: Request, res: Response, next: NextFunction) => {
 
 }
 
-const postFile = async (req: MulterRequest, res: Response, next: NextFunction) => {
-   console.log(req.files);
-   /*try {
-      const fileRepository = getRepository(File);
-      const newFile = await fileRepository.save(req.body);
+const postTag = async (req: Request, res: Response, next: NextFunction) => {
+   try {
+      const tagRepository = getRepository(Tag);
+      const newTag = await tagRepository.save(req.body);
       res.status(200).json({
          ok: true,
          msg: 'Registros guardado',
-         registros: newFile
+         registros: newTag
       })
    } catch (error) {
       res.status(400).json({
@@ -61,21 +55,21 @@ const postFile = async (req: MulterRequest, res: Response, next: NextFunction) =
          msg: 'Ha ocurrido un error',
          err: error
       });
-   }*/
+   }
 
 }
 
-const putFile = async (req: Request, res: Response, next: NextFunction) => {
+const putTag = async (req: Request, res: Response, next: NextFunction) => {
    try {
 
-      const fileRepository = getRepository(File);
-      const file = await fileRepository.findOne(req.params.id)
-      if (file) {
-         const newFile = await fileRepository.save(req.body);
+      const tagRepository = getRepository(Tag);
+      const tag = await tagRepository.findOne(req.params.id)
+      if (tag) {
+         const newTag = await tagRepository.save(req.body);
          res.status(200).json({
             ok: true,
             msg: 'Registros guardado',
-            registros: newFile
+            registros: newTag
          })
       } else {
          res.status(400).json({
@@ -95,12 +89,12 @@ const putFile = async (req: Request, res: Response, next: NextFunction) => {
 
 }
 
-const deleteFile = async (req: Request, res: Response, next: NextFunction) => {
+const deleteTag = async (req: Request, res: Response, next: NextFunction) => {
    try {
-      const fileRepository = getRepository(File);
-      const file = await fileRepository.findOne(req.params.id)
-      if (file) {
-         const action = await fileRepository.remove(file)
+      const tagRepository = getRepository(Tag);
+      const tag = await tagRepository.findOne(req.params.id)
+      if (tag) {
+         const action = await tagRepository.remove(tag)
          res.status(200).json({
             ok: true,
             msg: 'Registros guardado',
@@ -125,9 +119,9 @@ const deleteFile = async (req: Request, res: Response, next: NextFunction) => {
 
 
 export const options = {
-   getFile,
-   getFiles,
-   postFile,
-   deleteFile,
-   putFile
+   getTag,
+   getTags,
+   postTag,
+   deleteTag,
+   putTag
 }

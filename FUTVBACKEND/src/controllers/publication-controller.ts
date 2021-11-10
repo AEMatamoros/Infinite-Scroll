@@ -1,16 +1,17 @@
 import { getRepository } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import { Publication } from "../entity/Publication";
+import { File } from "../entity/Files";
 
 const getPublications = async (req: Request, res: Response, next: NextFunction) => {
    try {
       const publicationRepository = getRepository(Publication);
-      const publications = await publicationRepository.find({ relations: ["files"] })
+      const publications = await publicationRepository.find({ relations: ["files", 'tags'], take: 3, skip: parseInt(req.params.offset) })
       res.status(200).json({
          ok: true,
          msg: 'Registros obtenidos',
          registros: publications
-      })
+      });
    } catch (error) {
       res.status(400).json({
          ok: false,
@@ -24,12 +25,12 @@ const getPublications = async (req: Request, res: Response, next: NextFunction) 
 const getPublication = async (req: Request, res: Response, next: NextFunction) => {
    try {
       const publicationRepository = getRepository(Publication);
-      const publications = await publicationRepository.findOne(req.params.id,{ relations: ["files"] });
+      const publications = await publicationRepository.findOne(req.params.id, { relations: ["files", 'tags'] });
       res.status(200).json({
          ok: true,
          msg: 'Registros obtenidos',
          registros: publications
-      })
+      });
    } catch (error) {
       res.status(400).json({
          ok: false,
@@ -41,14 +42,28 @@ const getPublication = async (req: Request, res: Response, next: NextFunction) =
 }
 
 const postPublication = async (req: Request, res: Response, next: NextFunction) => {
+
    try {
+      let publication = req.body;
+
       const publicationRepository = getRepository(Publication);
-      const newPublication = await publicationRepository.save(req.body);
+      const newPublication = await publicationRepository.save(publication);
+
+      if (req.files && req.files.length > 0) {
+
+         const fileRepository = getRepository(File)
+         for (let i = 0; i < req.files.length; i++) {
+            let newFile = {publication:newPublication.id,file_name:req.files[i].originalname};
+            await fileRepository.save(newFile);
+         }
+
+      }
+
       res.status(200).json({
          ok: true,
          msg: 'Registros guardado',
          registros: newPublication
-      })
+      });
    } catch (error) {
       res.status(400).json({
          ok: false,

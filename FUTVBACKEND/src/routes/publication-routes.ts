@@ -2,19 +2,21 @@ import { Router } from 'express';
 
 import { options } from '../controllers/publication-controller';
 
+import { upload } from '../helpers/upload';
+
 export const publicationRouter = Router();
 
 
 
-publicationRouter.get('/',options.getPublications, (req,res)=>{
+publicationRouter.get('/:offset',options.getPublications, (req,res)=>{
 
 })
 
-publicationRouter.get('/:id',options.getPublication, (req,res)=>{
+publicationRouter.get('/one/:id',options.getPublication, (req,res)=>{
 
 })
 
-publicationRouter.post('/',options.postPublication,(req,res)=>{
+publicationRouter.post('/',upload.array('files',10), options.postPublication,(req,res)=>{
 
 })
 
