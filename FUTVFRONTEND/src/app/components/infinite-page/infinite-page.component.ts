@@ -19,6 +19,8 @@ export class InfinitePageComponent implements OnInit {
   public loadingPublications = true;
   public numberOfPublications:number;
 
+  //Carrusel
+  images = ['/assets/img/1.jpg','/assets/img/2.jpg','/assets/img/3.jpeg']
   //Crear Publicacion
   public publication = {
     title: "",

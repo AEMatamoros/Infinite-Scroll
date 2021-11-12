@@ -29,20 +29,63 @@
     </div>
 
   </nav>
-  <main class=" content-body ">
-      <h1 class="text-center">Seccion Principal</h1>
-  </main>
-
+  <main class="alert-danger content-body row m-0 p-0">
+    <ngb-carousel *ngIf="images">
+      <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img [src]="images[0]" alt="Random first slide" id='car-img'>
+        </div>
+        <div class="carousel-caption">
+          <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img [src]="images[1]" alt="Random second slide" id='car-img'>
+        </div>
+        <div class="carousel-caption">
+          <h3>Second slide label</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img [src]="images[2]" alt="Random third slide" id='car-img'>
+        </div>
+        <div class="carousel-caption">
+          <h3>Third slide label</h3>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </main> 
+  <div class="row mx-0">
+    <div class="col-12 text-center section-divisor py-2 m-0">
+      <h2>Contenido</h2>
+      
+    </div>
+  </div>
   <div class="search-results  row mx-0" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
     (scrolled)="onScroll()">
-    <div class="col-3 alert-success m-0 p-0">
-      Section1
+    <div class="col-3 my-0 p-2 alert-primary">
+      <div class="card my-2 w-100" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title text-center">
+            Title
+          </h5>
+          Match 1
+          <hr>
+          Match 2
+          <hr>
+          Match 3
+          <hr>
+          Match 4
+        </div>
+      </div>
     </div>
-    <div class="col-7 row alert-danger m-0 p-0">
-      <div *ngFor='let publication of publications'class='col-12 row m-0 p-0 my-2' >
-        
-        <h3 class="text-left col-10">{{publication.title}}</h3>
-        <span class="col-2">{{publication.date_created | date }}</span>
+    <div class="col-6 row m-0 py-2 px-4 alert-warning">
+      <div *ngFor='let publication of publications' class='col-12 row m-0 p-0 my-2 border publication-container'>
         <ng-container *ngFor='let file of publication.files' class="row m-0 my-2 p-2">
           <ng-container *ngIf='publication.files.length == 1'>
 
@@ -66,21 +109,69 @@
           </ng-container>
 
         </ng-container>
-        <span class="my-1 px-2">{{publication.description}}</span>
-        <hr class="col-12"> 
+        <div class="publication-text col-12 row m-0 py-2 px-4">
+          <h3 class="text-left col-10 p-0">{{publication.title}}</h3>
+          <span class="col-2 p-0">{{publication.date_created | date }}</span>
+          <span class="my-1 ">{{publication.description}}</span>
+        </div>
+
       </div>
     </div>
-    <div class="col-2 alert-primary m-0 p-0">
-      Section3
+    <div class="col-3 my-0 p-2 alert-success">
+      <div class="card mt-2 mb-4 w-100" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">New</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Date</h6>
+          <p class="card-text">Some new content text to build on the card title and make up the bulk of the card's content.</p>
+          <div class="text-right w-100 text-center">
+            <button class="btn btn-outline-primary card-button">See New</button>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-2 mb-4 w-100 black-card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">New</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Date</h6>
+          <p class="card-text">Some new content text to build on the card title and make up the bulk of the card's content.</p>
+          <div class="text-right w-100 text-center">
+            <button class="btn btn-outline-warning card-button">See New</button>
+          </div>
+        </div>
+      </div>
     </div>
-    
 
 
-<footer class="col-12 alert-success">
-    Footer
-  </footer>
+    <ng-container *ngIf='numberOfPublications == publications.length'>
+      <div class="text-center col-12 my-5">
+        No hay mas registros
+      </div>
+
+    </ng-container>
+    <footer class="col-12">
+      <div class="footer">
+        <div class="logo">
+          <span>
+            FUTV
+          </span>
+        </div>
+        <ul class="links">
+          <li><i class="fab fa-facebook-square"></i>Feisbuk</li>
+          <li><i class="fab fa-linkedin"></i>Instogram</li>
+          <li><i class="fab fa-twitter-square"></i>Twitwa</li>
+        </ul>
+        <div class="info">
+          Info
+        </div>
+        <div class="logo2">
+          Info
+        </div>
+      </div>
+      <div class="footer-close">
+        @2021
+      </div>
+    </footer>
   </div>
-  
+
 </div>
 
 

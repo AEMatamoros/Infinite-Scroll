@@ -13,7 +13,7 @@ import { InfinitePageComponent } from './components/infinite-page/infinite-page.
 //APP Req
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    NgbModule,
     InfiniteScrollModule
   ],
   providers: [],
